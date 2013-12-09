@@ -1,8 +1,9 @@
 var title = "PDX Transportation Monsters";
 var tonerUrl = 'http://tile.stamen.com/toner-lite/{z}/{x}/{y}.png';
+var tonerAttrib = '';
 var toner = new L.TileLayer(tonerUrl, {maxZoom: 18, attribution: tonerAttrib, subdomains: ['a1', 'a2', 'a3']});
 var baseMaps = {
-	"Toner": toner,
+	"Toner": toner
 };
 var markerGroup = new L.LayerGroup();
 var overlayMaps = {
@@ -39,11 +40,14 @@ var map = new L.Map('map', {
 	layers: [toner,markerGroup],
 	attributionControl: false
 });
+// define rectangle geographical bounds
 var bounds = [[-90, -180], [90, 180]];
 
+// create an orange rectangle
 L.rectangle(bounds, {color: "#fff", stroke:false, fillOpacity:0.7}).addTo(map);
 L.control.attribution({position: 'bottomright', prefix: '<a href="http://leafletjs.com/">Leaflet</a>, <a href="http://stamen.com">Stamen</a>, <a href="http://openstreetmap.org">OSM</a>, <a href="http://trimet.org/">TRIMET</a>'}).addTo(map);
 var layersControl = new L.Control.Layers(baseMaps,overlayMaps);
+//map.addControl(layersControl);
 window.setInterval(getMonsterLocations,2000);
 $("body").prepend(headerHTML);
 $(".demotitle").text(title);
