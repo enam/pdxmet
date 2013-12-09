@@ -1,16 +1,8 @@
 var title = "PDX Transportation Monsters";
 var tonerUrl = 'http://tile.stamen.com/toner-lite/{z}/{x}/{y}.png';
-var terrainUrl = 'http://tile.stamen.com/terrain/{z}/{x}/{y}.png';
-var watercolorUrl = 'http://tile.stamen.com/watercolor/{z}/{x}/{y}.png';
-var tonerAttrib = '';
-//'Map Base 2011 GeoIQ &#038; Stamen, Brewery data from <b><a href="http://brewerydb.com/">brewerydb.com</a></b>,Base Data OSM and Natural Earth, Built by <b><a href="https://twitter.com/#%21/nichom">@nichom</a></b>';
 var toner = new L.TileLayer(tonerUrl, {maxZoom: 18, attribution: tonerAttrib, subdomains: ['a1', 'a2', 'a3']});
-var terain = new L.TileLayer(terrainUrl, {maxZoom: 18, attribution: tonerAttrib, subdomains: ['a1', 'a2', 'a3']});
-var watercolor = new L.TileLayer(watercolorUrl, {maxZoom: 18, attribution: tonerAttrib, subdomains: ['a1', 'a2', 'a3']});
 var baseMaps = {
 	"Toner": toner,
-	//"Watercolor": watercolor,
-	//"Watercolor": watercolor
 };
 var markerGroup = new L.LayerGroup();
 var overlayMaps = {
@@ -47,14 +39,11 @@ var map = new L.Map('map', {
 	layers: [toner,markerGroup],
 	attributionControl: false
 });
-// define rectangle geographical bounds
 var bounds = [[-90, -180], [90, 180]];
 
-// create an orange rectangle
 L.rectangle(bounds, {color: "#fff", stroke:false, fillOpacity:0.7}).addTo(map);
 L.control.attribution({position: 'bottomright', prefix: '<a href="http://leafletjs.com/">Leaflet</a>, <a href="http://stamen.com">Stamen</a>, <a href="http://openstreetmap.org">OSM</a>, <a href="http://trimet.org/">TRIMET</a>'}).addTo(map);
 var layersControl = new L.Control.Layers(baseMaps,overlayMaps);
-//map.addControl(layersControl);
 window.setInterval(getMonsterLocations,2000);
 $("body").prepend(headerHTML);
 $(".demotitle").text(title);
@@ -180,22 +169,17 @@ function showMessage(m){
 function hideMessage(){
 	$("#signDiv").hide();
 }
+//Great formula found in Leaflet Google Groups for calculating dist of polyine. But I didn't write down the name of the commentor :(
+//This is used to get the length of the track for each update so that the speed of animation cna be calculated
 L.Polyline.prototype.length_in_meters = function () {
-
         var metros_totales_ruta = 0;
-
         var coordenadas_iniciales = null;
-
         var array_coordenadas_polilinea = this._latlngs;
-
         for (i = 0; i < array_coordenadas_polilinea.length - 1; i++) {
             coordenadas_iniciales = array_coordenadas_polilinea[i];
             metros_totales_ruta  += coordenadas_iniciales.distanceTo(array_coordenadas_polilinea[i + 1]);
 
         }
-
-        //redondear los metros de la ruta...
         metros_totales_ruta = metros_totales_ruta.toFixed();
-
         return metros_totales_ruta;
     }
