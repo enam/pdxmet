@@ -9,7 +9,7 @@ var terain = new L.TileLayer(terrainUrl, {maxZoom: 18, attribution: tonerAttrib,
 var watercolor = new L.TileLayer(watercolorUrl, {maxZoom: 18, attribution: tonerAttrib, subdomains: ['a1', 'a2', 'a3']});
 var baseMaps = {
 	"Toner": toner,
-	"Watercolor": watercolor,
+	//"Watercolor": watercolor,
 	//"Watercolor": watercolor
 };
 var markerGroup = new L.LayerGroup();
@@ -54,7 +54,7 @@ var bounds = [[-90, -180], [90, 180]];
 L.rectangle(bounds, {color: "#fff", stroke:false, fillOpacity:0.7}).addTo(map);
 L.control.attribution({position: 'bottomright', prefix: '<a href="http://leafletjs.com/">Leaflet</a>, <a href="http://stamen.com">Stamen</a>, <a href="http://openstreetmap.org">OSM</a>, <a href="http://trimet.org/">TRIMET</a>'}).addTo(map);
 var layersControl = new L.Control.Layers(baseMaps,overlayMaps);
-map.addControl(layersControl);
+//map.addControl(layersControl);
 window.setInterval(getMonsterLocations,2000);
 $("body").prepend(headerHTML);
 $(".demotitle").text(title);
